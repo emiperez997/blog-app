@@ -1,0 +1,59 @@
+<div class="bg-dark p-5">
+    <div class="container">
+        <h2 class="text-light text-center">{{ postTitle }}</h2>
+        {% if posts %}
+            <div class="card-group">
+                {% for post in posts %}
+                    <div class="card m-2">
+                        <div class="card-header text-center align-middle">
+                            <span class="fs-2">{{ post.title }}</span>
+                            {% if request.user.is_authenticated and post.author == request.user and page == 'my-posts' or page == 'profile' %}
+                                <div>
+                                    <a class="btn btn-success btn-sm"
+                                       href="{% url 'post-update' id=post.id %}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-sm"
+                                       href="{% url 'post-delete' id=post.id %}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ post.content }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-around">
+                                <small>{{ post.date_posted }}</small>
+                                <small>Author: <a href="{% url 'user-posts' username=post.author.username.lower %}">{{ post.author.username }}</a></small>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a class="btn btn-primary" href="{% url 'post-detail' id=post.id %}">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if page == 'home' %}
+                <div class="text-center mt-4">
+                    <a class="btn btn-primary btn-lg" href="{% url 'posts' %}">See all posts</a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="bg-light py-3">
+                <h3 class="text-center">
+                    <i class="fa-solid fa-heart-crack text-danger"></i>
+                    No posts yet
+                </h3>
+                {% if user.is_authenticated %}
+                    <div class="mt-4">
+                        <p class="text-center">
+                            <a class="btn btn-primary btn-lg" href="{% url 'post-create' %}">Create a post</a>
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-5 d-flex justify-content-center">
+        <div class="card p-5">
+            <h2 class="text-center mb-2">Login</h2>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% comment %} {{ form.as_p }} {% endcomment %}
+                {% for field in form %}
+                    <fieldset class="form-group">
+                        <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
+                        <div class="py-2">{{ field }}</div>
+                    </fieldset>
+                {% endfor %}
+                <input class="btn btn-primary mt-2" type="submit" value="Login">
+            </form>
+            <div class="mt-5 alert alert-success">
+                Don't have an account?
+                <br>
+                <a href="{% url 'register' %}">Register</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-5">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Blog</h1>
+            <p class="col-md-8 fs-4">
+                This is a blog where you can find all the latest news about the company.
+                You can also find some tips and tricks about the products we sell.
+            </p>
+        </div>
+    </div>
+    {% include "components/posts.html" %}
+{% endblock content %}

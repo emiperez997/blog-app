@@ -1,0 +1,42 @@
+<div class="bg-dark py-5">
+    <div class="container d-flex justify-content-center">
+        <div class="bg-light w-100">
+            <div class="text-center w-100">
+                <h3>Comments</h3>
+            </div>
+            <div class="list-group w-100">
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="border rounded-3 p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <p>{{ comment.comment }}</p>
+                                <small>{{ comment.date_posted }}</small>
+                                {% if request.user.is_authenticated and request.user.username == comment.author %}{% endif %}
+                            </div>
+                            <p class="mb-1">{{ comment.author }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-primary container text-center align-middle">
+                        <p>No comments yet</p>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="pb-5">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <div class="d-block">{{ field }}</div>
+                            {{ field.type }}
+                            {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+                            {% for error in field.errors %}<p class="card-danger">{{ error }}</p>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    <input class="btn btn-primary" type="submit" value="Comment">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center"></div>
+</div>

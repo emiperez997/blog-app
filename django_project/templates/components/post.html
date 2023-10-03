@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="py-5">
+        <div class="container bg-light py-5">
+            <div class="container py-3">
+                <h2>{{ post.title }}</h2>
+            </div>
+            <hr>
+            <div>
+                <p>{{ post.content }}</p>
+            </div>
+            <hr>
+            <div>
+                <p>
+                    Author: <strong>{{ post.author }}</strong>
+                </p>
+                <p>
+                    Date: <strong>{{ post.date_posted }}</strong>
+                </p>
+            </div>
+            {% if request.user.is_authenticated and post.author == request.user %}
+                <div>
+                    <a class="btn btn-success btn-sm"
+                       href="{% url 'post-update' id=post.id %}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm"
+                       href="{% url 'post-delete' id=post.id %}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if request.user.is_authenticated %}
+        {% include "components/comment_form.html" %}
+    {% endif %}
+{% endblock content %}

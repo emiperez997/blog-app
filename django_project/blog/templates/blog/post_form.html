@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-5 d-flex justify-content-center">
+        <div class="card p-5">
+            <h2 class="text-center mb-2">
+                {% if id %}
+                    Edit
+                {% else %}
+                    New
+                {% endif %}
+                Post
+            </h2>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <fieldset class="form-group">
+                        <label for="{{ field.name }}" class="control-label">{{ field.label }}</label>
+                        <div class="py2">{{ field }}</div>
+                    </fieldset>
+                {% endfor %}
+                <div class="text-center">
+                    <input class="btn btn-primary mt-2"
+                           type="submit"
+                           value="{% if id %} Save {% else %} Create {% endif %}">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
